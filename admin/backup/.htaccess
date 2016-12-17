@@ -1,0 +1,113 @@
+RewriteEngine On
+RewriteBase /sekolah/admin
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+#OPTION
+Options +FollowSymLinks 
+
+#=================LOGIN=====================
+RewriteRule ^login/ privat/login.php
+RewriteRule ^logout/ privat/logout.php
+
+
+#==================TABLE ARTICLE================================
+RewriteRule ^post/article module/article/article-post.php
+RewriteRule ^article/categories module/article/article-categories.php
+RewriteRule ^comment/article module/article/article-comments.php
+
+#PROSES
+RewriteRule ^new/article module/article/article-new-edit.php
+RewriteRule ^edit/article/(.*)/?$ module/article/article-new-edit.php?link_article=$1
+RewriteRule article-proses module/article/article_proses.php
+
+#==================TABLE AGENDA================================
+RewriteRule ^post/agenda module/agenda/agenda-post.php
+
+#PROSES
+RewriteRule ^new/agenda module/agenda/agenda-new-edit.php
+RewriteRule ^edit/agenda/(.*)/?$ module/agenda/agenda-new-edit.php?link_agenda=$1
+RewriteRule agenda-proses module/agenda/agenda_proses.php
+
+
+#==================TABLE PAGES================================
+RewriteRule ^post/pages module/pages/pages-post.php
+
+#PROSES
+RewriteRule ^new/pages module/pages/pages-new-edit.php
+RewriteRule ^edit/pages/(.*)/?$ module/pages/pages-new-edit.php?link_pages=$1
+RewriteRule pages-proses module/pages/pages_proses.php
+
+
+#==================GALERY================================
+RewriteRule ^galery/?$  module/galery/galery.php
+RewriteRule ^galery/categories module/galery/galery-categories.php
+
+#PROSES
+RewriteRule proses-galery module/galery/galery-proses.php
+
+
+#==================DOWNLOAD================================
+RewriteRule ^file-download/?$  module/file-download/file-download.php
+
+#PROSES
+RewriteRule download-proses module/file-download/file-download-proses.php
+
+
+
+#==================SLIDER================================
+RewriteRule ^setting/slider/?$  module/slider/slider.php
+#PROSES
+RewriteRule slider-proses module/slider/slider-proses.php
+
+
+#==================DATA ALUMNI================================
+RewriteRule ^data-alumni/?$ module/alumni/alumni.php
+#PROSES
+RewriteRule alumni-proses module/alumni/alumni-proses.php
+
+#==================DATA GURU================================
+RewriteRule ^data-guru/?$ module/guru/guru-post.php
+RewriteRule ^new/guru/?$ module/guru/guru-new-edit.php
+RewriteRule ^edit/guru/?$ module/guru/guru-new-edit.php
+#PROSES
+RewriteRule guru-proses module/guru/guru-proses.php
+
+
+#====================== MAILBOX ==========================
+RewriteRule ^mailbox/?$  module/contact/mailbox.php
+RewriteRule ^mailbox/detail/(.*)/?$ module/contact/mailbox.php?kode=$1
+RewriteRule ^action-mailbox module/contact/mailbox-proses.php
+
+#====================== GUESBOOK ==========================
+RewriteRule ^guestbook/?$  module/buku-tamu/guestbook.php
+RewriteRule ^guestbook-action module/buku-tamu/guestbook-proses.php
+
+
+#================== SETTING WEB ======================
+RewriteRule ^setting/basic/ module/setting/basic.php
+RewriteRule setting-proses module/setting/setting-basic-proses.php
+
+
+RewriteRule ^setting/menu module/setting/menu.php
+RewriteRule ^set-menu module/lib-menu/submenu.php
+RewriteRule menu-proses/?$ module/setting/menu-proses.php
+RewriteRule ^submenu_proses/ module/setting/submenu-proses.php
+
+
+
+
+RewriteRule ^setting/widget module/setting/widget.php
+RewriteRule set-wedget-proses module/setting/install-widget.php
+RewriteRule install-blog-html module/setting/install-widget-html.php
+
+RewriteRule ^setting/edit-template module/setting/edit-template.php
+
+
+#====================== PROFILE ==========================
+RewriteRule ^account/?$  module/profile/account.php
+RewriteRule ^setadmin-proses module/profile/account-proses.php
+
+

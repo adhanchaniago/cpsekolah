@@ -1,0 +1,46 @@
+<div class="content-widget">
+        <?PHP if(isset($_POST['add_polling'])){ 
+$id = strip_tags($_POST['id_soal']);
+$idj = strip_tags($_POST['name']);
+$soal = strip_tags($_POST['soal']);
+$jum = 0;
+$qjum = mysql_query("select * from polling_vote where id_soal='$id'");
+while($rjum=mysql_fetch_array($qjum)){
+$jum += strip_tags($rjum['vote']);}
+$pengunjung="sudah berkunjung";
+setcookie("pengunjung", $pengunjung, time()+3600);
+$pengunjung = $_COOKIE["pengunjung"]; 
+if (!isset($pengunjung)) {
+echo '<b>'.$soal.'</b><hr>';
+$q = mysql_query("update polling_vote set vote=vote+1 where id_jwb='$idj'");
+$qj = mysql_query("select * from polling_vote where id_soal='$id'");
+while($rj=mysql_fetch_array($qj)) {
+$pr = sprintf("%2.1f",(($rj['vote']/$jum)*100));
+$gbr = $pr * 2;
+echo ''.$rj['jawaban'].'<br>
+<div style="padding:1px 10px 1px 2px;color:#fff;font-size:10px;margin-bottom:2px;background:#3699DC; width:'.$gbr.'px;">'.$rj['vote'].'%</div>';}}
+else{echo "<b>Anda sudah melakukan voting sebelumnya..!!!<br>Terima Kasih telah melakukan voting.</b>";}}
+$id = "";?>
+<?PHP if(empty($_POST['add_polling'])){?>
+<form name="myform" id="myform" action="" method="POST">  
+<?php
+$polling = mysql_query("select * from polling where status='polling_web'");
+$row_polling=mysql_fetch_array($polling);
+$id_polling= strip_tags($row_polling['id_soal']);
+$title_soal = strip_tags($row_polling['soal']);
+echo"".$title_soal."<br>";?>
+  
+<input type="hidden" value="<?php echo $id_polling; ?>" name="id_soal">
+<input type="hidden" value="<?php echo $title_soal; ?>" name="soal">
+<!-- The Name form field -->
+<?php
+$query_vote = mysql_query("select * from polling_vote where id_soal='1'");
+while($vote=mysql_fetch_array($query_vote)){
+$id_jawaban = strip_tags($vote['id_jwb']);
+$jawaban = strip_tags($vote['jawaban']);?>
+        <br>
+<input type="radio" name="name" checked="checked" value="<?php echo $id_jawaban;?>"/> <?php echo $jawaban;?>
+<?php } ?>
+<br><br><input type="submit" class="btn btn-info btn-small" name="add_polling" value="Submit"> 
+</form>	<?PHP }?>
+</div>

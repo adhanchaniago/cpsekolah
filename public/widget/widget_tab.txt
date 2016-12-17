@@ -1,0 +1,88 @@
+<div class="tab-wrapper">
+<ul class="tabs-1 clearfix">
+<li class="active"><a href="#tab-1-1"><i class="icon-calendar"></i> Agenda</a></li>
+<li><a href="#tab-1-2"><i class="icon-heart"></i> Populer</a></li>
+<li><a href="#tab-1-3"><i class="icon-list-ul"></i> List</a></li>
+</ul>
+
+<div class="tab-container">
+<div class="tab-content-1" id="tab-1-1">                        
+<div class="agenda_widget">
+<ul class="popular_posts_list">
+<?PHP $agenda = mysql_query("select * from agenda order by agenda.id_agenda desc LIMIT 5") or die ($mysql_error);
+$cek_agenda = mysql_num_rows($agenda); 
+if($cek_agenda!=0){
+while($row_agenda = mysql_fetch_array($agenda)){
+$a_title_agenda2 = strip_tags($row_agenda['title']);
+$a_link_agenda ="".MY_PATH."agenda/view/".strip_tags($row_agenda['link_agenda']).".html";
+$a_content_agenda = strip_tags(substr($row_agenda['content'],0,50));
+$a_date_agenda_list = strip_tags($row_agenda['date']);
+$a_time_agenda_list = strip_tags($row_agenda['time']);
+?>
+
+<li><div class="tumb"><i class="icon-calendar"></i></div>
+<p class="wrap">
+<a href="<?PHP echo $a_link_agenda;?>" class="title_post"><?PHP echo $a_title_agenda2;?></a>
+<small class="rp_date"><i class="icon icon-calendar"></i> <?PHP echo $a_time_agenda_list;?> / <?PHP echo $a_date_agenda_list;?> </small>
+</p>
+</li>
+<?PHP }} else {echo"Agenda Hari ini Kosong";}?></ul>
+<a href="<?PHP echo MY_PATH?>agenda/"><button class="btn btn-info btn-small btn-block">Lihat Semua</button></a>
+</div>
+</div>
+        
+<div class="tab-content-1" id="tab-1-2">    
+<div class="content-widget">                    
+<ul class="popular_posts_list">
+<?PHP $wp_query_article =mysql_query("select * from article order by article.stat DESC limit 5") or die(mysql_error());
+$wp_cek_article= mysql_num_rows($wp_query_article);
+if($wp_cek_article!=0){
+while($wp_post_article= mysql_fetch_array($wp_query_article)){
+$wp_title_article = strip_tags($wp_post_article['title']);
+$wp_link_article ="".MY_PATH."post/".strip_tags($wp_post_article['link_article']).".html";
+$wp_content_article = $wp_post_article['content'];
+$wp_gambar_article = cek_img_tag($wp_content_article);
+// set tanggal indonesia
+$wp_date_article = strip_tags($wp_post_article['date']);
+$wp_tanggal_article = date('D, d M Y', strtotime($wp_date_article));
+$wp_date_article = dateindo($wp_tanggal_article);?>
+<li><div class="recent-img">
+<a href="<?php echo $w_link_article;?>">
+<?PHP if($wp_gambar_article ==''){?>
+<img src="<?PHP echo MY_PATH?>img/not-images.png" /><?PHP } else{ echo $wp_gambar_article;}?></a></div>
+<p class="wrap">
+<a href="<?php echo $wp_link_article;?>" class="title_post"><?PHP echo $wp_title_article;?></a>
+<small class="rp_date"><?PHP echo $wp_date_article;?></small>
+</p>
+</li><?PHP }} else {echo"<center><h3>Belum ada Article</h3></center>";}?>
+</ul>
+</div></div>
+        
+<div class="tab-content-1" id="tab-1-3">                        
+<div class="content-widget">
+<ul class="popular_posts_list">
+<?PHP $list_query_article =mysql_query("select * from article order by article.id_article DESC limit 5") or die(mysql_error());
+$list_cek_article= mysql_num_rows($list_query_article); $tumb =0;
+if($list_cek_article!=0){
+while($list_post_article= mysql_fetch_array($list_query_article)){
+$tumb++;
+$list_title_article = strip_tags($list_post_article['title']);
+$list_link_article ="".MY_PATH."post/".strip_tags($list_post_article['link_article']).".html";
+$list_content_article = $list_post_article['content'];
+$list_gambar_article = cek_img_tag($list_content_article);
+// set tanggal indonesia
+$list_date_article = strip_tags($list_post_article['date']);
+$list_tanggal_article = date('D, d M Y', strtotime($list_date_article));
+$list_date_article = dateindo($list_tanggal_article);?>
+<li><div class="tumb"><?PHP echo $tumb;?></div>
+<p class="wrap">
+<a href="<?php echo $list_link_article;?>" class="title_post"><?PHP echo $list_title_article;?></a>
+<small class="rp_date"><?PHP echo $list_date_article;?></small>
+</p>
+</li><?PHP }} else {echo"<h3>Belum ada Article</h3>";}?>
+</ul>
+</div>	
+</div>         
+</div></div>
+        
+ 

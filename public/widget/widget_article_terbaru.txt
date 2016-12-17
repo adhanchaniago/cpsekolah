@@ -1,0 +1,25 @@
+<div class="content-widget">
+<ul class="popular_posts_list">
+<?PHP $w_query_article =mysql_query("select * from article order by article.id_article DESC limit 10") or die(mysql_error());
+$w_cek_article= mysql_num_rows($w_query_article);
+if($w_cek_article!=0){
+while($w_post_article= mysql_fetch_array($w_query_article)){
+$w_title_article = strip_tags($w_post_article['title']);
+$w_link_article ="".MY_PATH."post/".strip_tags($w_post_article['link_article']).".html";
+$w_content_article = $w_post_article['content'];
+$w_gambar_article = cek_img_tag($w_content_article);
+// set tanggal indonesia
+$w_date_article = strip_tags($w_post_article['date']);
+$w_tanggal_article = date('D, d M Y', strtotime($w_date_article));
+$w_date_article = dateindo($w_tanggal_article);?>
+<li><div class="recent-img">
+<a href="<?php echo $w_link_article;?>">
+<?PHP if($w_gambar_article ==''){?>
+<img src="<?PHP echo MY_PATH?>img/not-images.png" /><?PHP } else{ echo $w_gambar_article;}?></a></div>
+<p class="wrap">
+<a href="<?php echo $w_link_article;?>" class="title_post"><?PHP echo $w_title_article;?></a>
+<small class="rp_date"><?PHP echo $w_date_article;?></small>
+</p>
+</li><?PHP }} else {echo"<h3>Belum ada Article</h3>";}?>
+</ul>
+</div>	

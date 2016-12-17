@@ -1,0 +1,11 @@
+<ul class="arrows_list">
+<?PHP $sql_blog_tags=mysql_query("select * from article_categories order by article_categories.title ");
+while($blog_tags=mysql_fetch_array($sql_blog_tags)){
+$title_tags = ucwords(strip_tags($blog_tags['title']));
+$link_tags ="".MY_PATH."berita/tags/".$blog_tags['link_categories']."";
+$cat2 = str_replace('-',' ',$title_tags);
+$sqltag=mysql_query("select count(*) as jmlh from article where categories like'%$cat2%' order by id_article desc");
+$stattag=mysql_fetch_array($sqltag);
+$juml_tag = $stattag ['jmlh'];?> 
+<li><a href="<?PHP echo $link_tags;?>"><i class="fa icon-double-angle-right"></i> <?PHP echo $title_tags;?><span><?PHP echo $juml_tag;?></span></a></li><?PHP }?>
+</ul>
